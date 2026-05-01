@@ -2,34 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================
+   CSS VARIABLES — LIGHT THEME
+   ============================================= */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f1f3f4;
+  --bg-hover: rgba(0,0,0,0.06);
+  --bg-active: #e3f2fd;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --border: #e0e0e0;
+  --border-subtle: #f0f0f0;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --text-tertiary: #9aa0a6;
+  --text-on-accent: #ffffff;
+  --accent: #1a73e8;
+  --accent-hover: #1557b0;
+  --accent-light: #e8f0fe;
+  --accent-light-hover: #d2e3fc;
+  --danger: #d93025;
+  --danger-light: #fce8e6;
+  --success: #1e8e3e;
+  --shadow-sm: 0 1px 2px rgba(60,64,67,0.1), 0 1px 3px rgba(60,64,67,0.08);
+  --shadow-md: 0 2px 6px rgba(60,64,67,0.15), 0 1px 2px rgba(60,64,67,0.1);
+  --shadow-lg: 0 4px 12px rgba(60,64,67,0.15), 0 2px 4px rgba(60,64,67,0.1);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: 'Google Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --glass-bg: transparent;
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-text: #202124;
+  --glass-text-secondary: #5f6368;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* =============================================
+   CSS VARIABLES — DARK THEME
+   ============================================= */
+.dark {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #1f1f1f;
+  --bg-tertiary: #2a2a2a;
+  --bg-hover: rgba(255,255,255,0.08);
+  --bg-active: #1e3a8a;
+  --surface: #2d2d2d;
+  --surface-elevated: #3a3a3a;
+  --border: #404040;
+  --border-subtle: #333333;
+  --text-primary: #e8eaed;
+  --text-secondary: #bdc1c6;
+  --text-tertiary: #9aa0a6;
+  --text-on-accent: #ffffff;
+  --accent: #4285f4;
+  --accent-hover: #669df6;
+  --accent-light: #1a3a6b;
+  --accent-light-hover: #1e40af;
+  --danger: #f28b82;
+  --danger-light: #5c1f1a;
+  --success: #34a853;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.5);
+  --glass-bg: transparent;
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-text: #ffffff;
+  --glass-text-secondary: #bdc1c6;
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+/* =============================================
+   GLOBAL RESETS & BASE
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+html { font-family: var(--font-sans); }
+
+body {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button { cursor: pointer; font-family: var(--font-sans); }
+input { font-family: var(--font-sans); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
 }
 
 @layer components {
@@ -38,45 +126,566 @@
   }
 }
 
-/* react-draft-wysiwyg overrides */
-.rdw-editor-wrapper {
-  @apply z-10 !important;
+/* =============================================
+   SKELETON ANIMATION
+   ============================================= */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-.rdw-dropdown-optionwrapper {
-  @apply z-[9999] bg-white text-black border border-gray-300 shadow-2xl !important;
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  position: absolute !important;
-  min-width: 100px !important;
+.skeleton {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
-.rdw-colorpicker-modal,
-.rdw-emoji-modal,
-.rdw-embedded-modal,
-.rdw-image-modal,
-.rdw-link-modal {
-  @apply z-[9999] bg-white text-black border border-gray-300 shadow-2xl !important;
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  position: absolute !important;
-  top: 35px !important;
-}
+/* =============================================
+   DOCUMENT ROW
+   ============================================= */
+.doc-row:hover { background: var(--bg-hover) !important; }
+.doc-row:hover .doc-row-actions { opacity: 1; }
+.doc-row-actions { opacity: 0; transition: var(--transition); }
 
-.rdw-editor-toolbar {
-  @apply bg-white border-b border-gray-200 !important;
-  @apply sticky top-0 z-[500] !important;
+/* =============================================
+   REACT-DRAFT-WYSIWYG — THEME ONLY
+   
+   NO layout, sizing, or positioning overrides!
+   We ONLY change colors for dark mode. 
+   ============================================= */
+
+/* ── Toolbar buttons — bigger + animated gradient borders ── */
+.rdw-option-wrapper {
+  background: transparent !important;
+  border-color: transparent !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
   display: flex !important;
-  padding: 6px 10px !important;
-  overflow: visible !important; /* Critical for dropdowns */
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden !important;
+  margin: 2px !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease !important;
 }
 
+/* Ensure pseudo-elements don't block clicks */
+.rdw-option-wrapper::before,
+.rdw-option-wrapper::after,
+.rdw-dropdown-selectedtext::before,
+.rdw-dropdown-selectedtext::after,
+.menu-btn-rainbow::before,
+.menu-btn-rainbow::after {
+  pointer-events: none !important;
+}
+
+.rdw-option-wrapper:hover {
+  background: transparent !important;
+  transform: scale(1.08);
+}
+
+.rdw-option-active {
+  background: transparent !important;
+}
+
+/* Bigger icons + Inverted for dark toolbar visibility */
+.rdw-option-wrapper img {
+  width: 22px !important;
+  height: 22px !important;
+  position: relative;
+  z-index: 1;
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Rotating rainbow gradient — sits behind everything */
+.rdw-option-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #374151 0deg,   /* Gray-700 */
+    #9ca3af 120deg, /* Gray-400 (Silver shine) */
+    #1f2937 240deg, /* Gray-800 */
+    #374151 360deg
+  );
+  animation: toolbarBtnRotate 6s ease-in-out infinite;
+  z-index: -2;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+/* Inner fill — reveals only the 3px border */
+.rdw-option-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #2a2a35 !important; /* Match dark toolbar */
+  border-radius: 3px;
+  z-index: -1;
+  transition: background 0.2s ease;
+}
+
+/* Hover → brighter border + tinted fill */
+.rdw-option-wrapper:hover::before { opacity: 1; }
+.rdw-option-wrapper:hover::after  { background: #3f3f4e !important; }
+
+/* Active state fill */
+.rdw-option-active::after { background: var(--accent-light) !important; }
+.rdw-option-active::before { opacity: 0.9; }
+
+/* Removed alternating rotation direction */
+
+/* CW → pause → CCW → pause */
+@keyframes toolbarBtnRotate {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  45%  { transform: translate(-50%, -50%) rotate(360deg); }
+  50%  { transform: translate(-50%, -50%) rotate(360deg); }
+  95%  { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+/* Bigger dropdowns wrapper — NO OVERFLOW HIDDEN HERE so menu can drop down! */
+.rdw-dropdown-wrapper {
+  min-height: 38px !important;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+  position: relative !important;
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Make the inner content wrapper hold the metallic border */
+.rdw-dropdown-selectedtext {
+  color: #e8eaed !important;
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden !important;
+  border-radius: 8px !important;
+  height: 38px !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+  background: transparent !important;
+}
+
+/* Dropdown rainbow background */
+.rdw-dropdown-selectedtext::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #374151 0deg,   /* Gray-700 */
+    #9ca3af 120deg, /* Gray-400 (Silver shine) */
+    #1f2937 240deg, /* Gray-800 */
+    #374151 360deg
+  );
+  animation: toolbarBtnRotate 6s ease-in-out infinite;
+  z-index: -2;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+/* Dropdown inner fill */
+.rdw-dropdown-selectedtext::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #2a2a35 !important; /* Match dark toolbar */
+  border-radius: 5px;
+  z-index: -1;
+  transition: background 0.2s ease;
+}
+
+/* Hover state for dropdowns */
+.rdw-dropdown-wrapper:hover .rdw-dropdown-selectedtext::before { opacity: 1; }
+.rdw-dropdown-wrapper:hover .rdw-dropdown-selectedtext::after  { background: #3f3f4e !important; }
+
+/* Ensure caret sits above the background and is colored/aligned correctly */
 .rdw-dropdown-carettoopen {
-  @apply border-t-black !important;
+  position: relative;
+  z-index: 1;
+  border-top-color: #e8eaed !important;
+  border-bottom-color: #e8eaed !important;
+  margin-left: 8px !important;
+  margin-top: 4px !important;
 }
 
 .rdw-dropdown-carettoclose {
-  @apply border-b-black !important;
+  position: relative;
+  z-index: 1;
+  border-top-color: #e8eaed !important;
+  border-bottom-color: #e8eaed !important;
+  margin-left: 8px !important;
+  margin-top: -2px !important;
+}
+
+/* The actual dropdown popup menu (needs a dark theme to match) */
+.rdw-dropdown-optionwrapper {
+  background: #2a2a35 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+  padding: 4px !important;
+  margin-top: 4px !important;
+}
+
+.rdw-dropdownoption-default {
+  color: #e8eaed !important;
+  border-radius: 4px !important;
+}
+
+.rdw-dropdownoption-default:hover,
+.rdw-dropdownoption-active {
+  background: #3f3f4e !important;
+}
+
+/* ── Menu bar buttons — rainbow animated border ── */
+.menu-btn-rainbow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.menu-btn-rainbow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #374151 0deg,   /* Gray-700 */
+    #9ca3af 120deg, /* Gray-400 (Silver shine) */
+    #1f2937 240deg, /* Gray-800 */
+    #374151 360deg
+  );
+  animation: toolbarBtnRotate 6s ease-in-out infinite;
+  z-index: -2;
+  opacity: 0.45;
+  transition: opacity 0.25s ease;
+}
+.menu-btn-rainbow::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: var(--surface);
+  border-radius: 5px;
+  z-index: -1;
+  transition: background 0.2s ease;
+}
+.menu-btn-rainbow:hover::before {
+  opacity: 1;
+}
+.menu-btn-rainbow:hover::after {
+  background: var(--bg-hover);
+}
+/* Removed alternating rotation for menu buttons */
+
+/* Fix dropdown positioning so they float instead of stretching the toolbar */
+.rdw-dropdown-wrapper {
+  position: relative !important;
+}
+
+.rdw-dropdown-optionwrapper {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  z-index: 99999 !important;
+}
+
+/* Ensure toolbar doesn't clip popups */
+.rdw-editor-toolbar {
+  overflow: visible !important;
+}
+
+/* Dark mode — invert icons */
+.dark .rdw-option-wrapper img,
+.dark .rdw-dropdown-carettoopen,
+.dark .rdw-dropdown-carettoclose {
+  filter: invert(1);
+}
+
+/* Base surface colors for dark mode */
+.dark .rdw-editor-toolbar,
+.dark .rdw-dropdown-wrapper,
+.dark .rdw-dropdown-optionwrapper,
+.dark .rdw-colorpicker-modal,
+.dark .rdw-emoji-modal,
+.dark .rdw-link-modal,
+.dark .rdw-image-modal,
+.dark .rdw-embedded-modal {
+  background: var(--surface-elevated) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .rdw-dropdown-selectedtext,
+.dark .rdw-dropdownoption-default {
+  color: var(--text-primary) !important;
+}
+
+/* Modal inputs */
+.dark .rdw-link-modal input,
+.dark .rdw-image-modal input,
+.dark .rdw-embedded-modal input {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Hover states */
+.dark .rdw-option-wrapper:hover,
+.dark .rdw-dropdown-wrapper:hover,
+.dark .rdw-dropdownoption-default:hover,
+.dark .rdw-dropdownoption-highlighted {
+  background: var(--bg-hover) !important;
+  box-shadow: none !important;
+}
+
+/* Draft.js content */
+.DraftEditor-root,
+.public-DraftEditor-content {
+  min-height: 900px;
+}
+
+.public-DraftEditorPlaceholder-root {
+  color: var(--text-tertiary) !important;
+}
+
+/* =============================================
+   HEADER & NAV
+   ============================================= */
+header {
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+}
+
+/* =============================================
+   MODAL / DIALOG
+   ============================================= */
+[role="dialog"] {
+  background: var(--surface-elevated) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Dark mode input text */
+.dark input {
+  color: var(--text-primary) !important;
+  background: var(--bg-tertiary) !important;
+}
+
+/* =============================================
+   LOGIN PAGE — PREMIUM DARK ANIMATIONS
+   ============================================= */
+
+/* Animated gradient orbs */
+.login-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: loginOrbFloat 20s ease-in-out infinite;
+}
+.login-orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(66,133,244,0.18) 0%, transparent 70%);
+  top: -10%; left: -5%;
+}
+.login-orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(52,168,83,0.12) 0%, transparent 70%);
+  bottom: -10%; right: -5%;
+  animation-delay: -7s;
+}
+.login-orb-3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(251,188,5,0.1) 0%, transparent 70%);
+  top: 50%; left: 60%;
+  animation-delay: -14s;
+}
+@keyframes loginOrbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(40px, 30px) scale(1.05); }
+}
+
+/* Rising particles */
+.login-particle {
+  position: absolute;
+  bottom: -10px;
+  background: #4285F4;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: loginParticleRise linear infinite;
+}
+@keyframes loginParticleRise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.25; }
+  90%  { opacity: 0.15; }
+  100% { transform: translateY(-105vh) translateX(20px); opacity: 0; }
+}
+
+/* Logo glow pulse */
+.login-logo-glow {
+  animation: loginLogoGlow 3s ease-in-out infinite;
+}
+@keyframes loginLogoGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(66,133,244,0.3)); }
+  50%      { filter: drop-shadow(0 0 24px rgba(66,133,244,0.7)); }
+}
+
+/* Button shimmer sweep */
+.login-btn-shimmer {
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  animation: loginShimmer 3s ease-in-out infinite;
+}
+@keyframes loginShimmer {
+  0%   { left: -100%; }
+  50%  { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Floating doc entrance */
+.login-floating-doc {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* =============================================
+   LOADING / WELCOME SCREEN ANIMATIONS
+   ============================================= */
+
+/* Car circular orbit */
+.loading-car-orbit {
+  animation: loadingCarOrbit linear infinite;
+}
+@keyframes loadingCarOrbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Bouncing loading dots */
+.loading-bounce-dot {
+  animation: loadingDotBounce 0.6s ease-in-out infinite alternate;
+}
+@keyframes loadingDotBounce {
+  from { transform: translateY(0); opacity: 0.35; }
+  to   { transform: translateY(-14px); opacity: 1; }
+}
+
+/* Orbit track subtle pulse */
+.loading-track {
+  animation: loadingTrackPulse 3s ease-in-out infinite;
+}
+@keyframes loadingTrackPulse {
+  0%, 100% { opacity: 0.4; border-color: rgba(66,133,244,0.1); }
+  50%      { opacity: 1;   border-color: rgba(66,133,244,0.2); }
+}
+
+/* Second ring counter-rotate */
+.loading-ring-spin {
+  animation: loadingRingSpin 20s linear infinite;
+}
+@keyframes loadingRingSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* =============================================
+   EDITOR CANVAS — DUAL RAINBOW ROTATING BORDERS
+   Outer border → clockwise
+   Inner border → counter-clockwise
+   ============================================= */
+
+/* Animatable angle properties */
+@property --canvas-angle-cw {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --canvas-angle-ccw {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.docs-editor-canvas {
+  position: relative !important;
+  overflow: visible !important;
+  isolation: isolate;
+  /* Subtle dark shadow replacing the rainbow glow */
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Shared base for both black borders */
+.docs-editor-canvas::before,
+.docs-editor-canvas::after {
+  content: '';
+  position: absolute;
+  border-radius: 4px;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* ── Outer border — CW, 2px wide, from -6px to -4px ── */
+.docs-editor-canvas::before {
+  inset: -6px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--canvas-angle-cw),
+    #000000 0deg,
+    #333333 180deg,
+    #000000 360deg
+  );
+  animation: canvasRainbowCW 3s linear infinite;
+  z-index: -2;
+  opacity: 1;
+}
+
+/* ── Inner border — CCW, 2px wide, from -4px to -2px (flush with outer) ── */
+.docs-editor-canvas::after {
+  inset: -4px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--canvas-angle-ccw),
+    #000000 0deg,
+    #333333 180deg,
+    #000000 360deg
+  );
+  animation: canvasRainbowCCW 4s linear infinite;
+  z-index: -1;
+  opacity: 1;
+}
+
+@keyframes canvasRainbowCW {
+  to { --canvas-angle-cw: 360deg; }
+}
+@keyframes canvasRainbowCCW {
+  to { --canvas-angle-ccw: -360deg; }
 }

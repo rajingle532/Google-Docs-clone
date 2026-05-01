@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── documents collection (flat structure used by the app) ──
+    match /documents/{docId} {
+      // Anyone authenticated can read if they own or are shared
+      allow read: if request.auth != null && (
+        resource.data.ownerEmail == request.auth.token.email ||
+        request.auth.token.email in resource.data.sharedWith
+      );
+
+      // Authenticated user can create their own documents
+      allow create: if request.auth != null &&
+        request.resource.data.ownerEmail == request.auth.token.email;
+
+      // Owner can update/delete
+      allow update, delete: if request.auth != null &&
+        resource.data.ownerEmail == request.auth.token.email;
+    }
+
+    // ── NextAuth / FirestoreAdapter collections ──
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+    match /accounts/{accountId} {
+      allow read, write: if request.auth != null;
+    }
+    match /sessions/{sessionId} {
+      allow read, write: if request.auth != null;
+    }
+    match /verification_tokens/{tokenId} {
+      allow read, write: if true;
+    }
+  }
+}
