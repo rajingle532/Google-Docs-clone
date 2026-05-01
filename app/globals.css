@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+} */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .option {
+    @apply cursor-pointer hover:bg-gray-100 transition duration-200 ease-out p-2 rounded-lg;
+  }
+}
+
+/* react-draft-wysiwyg overrides */
+.rdw-editor-wrapper {
+  @apply z-10 !important;
+}
+
+.rdw-dropdown-optionwrapper {
+  @apply z-[9999] bg-white text-black border border-gray-300 shadow-2xl !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: absolute !important;
+  min-width: 100px !important;
+}
+
+.rdw-colorpicker-modal,
+.rdw-emoji-modal,
+.rdw-embedded-modal,
+.rdw-image-modal,
+.rdw-link-modal {
+  @apply z-[9999] bg-white text-black border border-gray-300 shadow-2xl !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: absolute !important;
+  top: 35px !important;
+}
+
+.rdw-editor-toolbar {
+  @apply bg-white border-b border-gray-200 !important;
+  @apply sticky top-0 z-[500] !important;
+  display: flex !important;
+  padding: 6px 10px !important;
+  overflow: visible !important; /* Critical for dropdowns */
+}
+
+.rdw-dropdown-carettoopen {
+  @apply border-t-black !important;
+}
+
+.rdw-dropdown-carettoclose {
+  @apply border-b-black !important;
+}
