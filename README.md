@@ -6,6 +6,16 @@ A **full-stack collaborative document editor** inspired by Google Docs, built wi
 
 ---
 
+## 📸 Screenshots
+
+### Login Page
+![Login Page](screenshots/login-page.png)
+
+### Sign Up Page
+![Sign Up Page](screenshots/signup-page.png)
+
+---
+
 ## ✨ Features
 
 - **🔐 Authentication** — Google OAuth & Email/Password login via NextAuth.js
